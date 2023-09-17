@@ -1,9 +1,7 @@
 package com.pos.pointOfSale.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.pos.pointOfSale.dto.CustomerDTO;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "api/v1/customer")
@@ -11,7 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerController {
 
     @GetMapping("/save")
-    public void addCustomer(){
+    public void addCustomer(@RequestBody CustomerDTO customerDTO){
+        System.out.println("customer :"+customerDTO);
+
 
     }
 }
