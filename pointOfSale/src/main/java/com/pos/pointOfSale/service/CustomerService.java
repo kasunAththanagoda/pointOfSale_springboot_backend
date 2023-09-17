@@ -1,10 +1,12 @@
 package com.pos.pointOfSale.service;
 
-import com.pos.pointOfSale.entity.Customer;
-import com.pos.pointOfSale.service.impl.CustomerServiceIMPL;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import com.pos.pointOfSale.dto.request.CustomerSaveRequestDTO;
+import com.pos.pointOfSale.dto.request.CustomerUpdateRequestDTO;
 
 
 public interface CustomerService {
+    String addCustomer(CustomerSaveRequestDTO customerSaveRequestDTO);
+
+    String updateCustomer(CustomerUpdateRequestDTO customerUpdateRequestDTO);
 }
