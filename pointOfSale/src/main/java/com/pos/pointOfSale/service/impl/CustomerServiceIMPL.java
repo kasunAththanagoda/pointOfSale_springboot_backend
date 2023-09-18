@@ -6,6 +6,7 @@ import com.pos.pointOfSale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.pointOfSale.entity.Customer;
 import com.pos.pointOfSale.repository.CustomerRepo;
 import com.pos.pointOfSale.service.CustomerService;
+import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class CustomerServiceIMPL implements CustomerService {
     @Override
     public String addCustomer(CustomerSaveRequestDTO customerSaveRequestDTO) {
 
-        Customer customer=new Customer(
+        Customer customer = new Customer(
 //                customerSaveRequestDTO.getCustomerId(),
                 customerSaveRequestDTO.getCustomerName(),
                 customerSaveRequestDTO.getCustomerAddress(),
@@ -37,13 +38,13 @@ public class CustomerServiceIMPL implements CustomerService {
                 false
         );
         customerRepo.save(customer);
-        return customer.getCustomerName() +"saved with :"+customer.getCustomerId()+" id";
+        return customer.getCustomerName() + "saved with :" + customer.getCustomerId() + " id";
     }
 
     @Override
     public String updateCustomer(CustomerUpdateRequestDTO customerUpdateRequestDTO) {
-        if(customerRepo.existsById(customerUpdateRequestDTO.getCustomerId())){
-            Customer customer= customerRepo.getById(customerUpdateRequestDTO.getCustomerId());
+        if (customerRepo.existsById(customerUpdateRequestDTO.getCustomerId())) {
+            Customer customer = customerRepo.getById(customerUpdateRequestDTO.getCustomerId());
 
             customer.setCustomerName(customerUpdateRequestDTO.getCustomerName());
             customer.setCustomerAddress(customerUpdateRequestDTO.getCustomerAddress());
@@ -56,7 +57,7 @@ public class CustomerServiceIMPL implements CustomerService {
 
             return "user updated";
 
-        }else{
+        } else {
             System.out.println("user id not found");
             return "user id not found";
         }
@@ -64,25 +65,24 @@ public class CustomerServiceIMPL implements CustomerService {
 
     @Override
     public CustomerDTO getCustomerById(int id) {
-        Optional<Customer> customer=customerRepo.findById(id);
+        Optional<Customer> customer = customerRepo.findById(id);
 
-        if(customer.isPresent()){
+        if (customer.isPresent()) {
 //            CustomerDTO customerDTO=new CustomerDTO();
-            CustomerDTO customerDTO=modelMapper.map(customer.get(),CustomerDTO.class);
+            CustomerDTO customerDTO = modelMapper.map(customer.get(), CustomerDTO.class);
             return customerDTO;
-        }else {
+        } else {
             return null;
-            }
-
+        }
 
 
     }
 
     @Override
     public List<CustomerDTO> getAllCustomers() {
-        List<Customer> allCustomersEntity=customerRepo.findAll();
+        List<Customer> allCustomersEntity = customerRepo.findAll();
 
-        List<CustomerDTO> customerDtoList=new ArrayList<>();
+        List<CustomerDTO> customerDtoList = new ArrayList<>();
 //        for(Customer c:allCustomersEntity){
 //            CustomerDTO customerDTO=new CustomerDTO(
 //              c.getCustomerId(),
@@ -96,9 +96,35 @@ public class CustomerServiceIMPL implements CustomerService {
 //            customerDtoList.add(customerDTO);
 //        }
 
-        List<CustomerDTO> customerDTOS=modelMapper
-                .map(allCustomersEntity,new TypeToken<List<CustomerDTO>>(){}.getType());
+        List<CustomerDTO> customerDTOS = modelMapper
+                .map(allCustomersEntity, new TypeToken<List<CustomerDTO>>() {
+                }.getType());
 
         return customerDTOS;
+    }
+
+    @Override
+    public boolean deleteCustomer(int id) throws NotFoundException {
+        if(customerRepo.existsById(id)){
+            customerRepo.deleteById(id);
+        }
+        else{
+            throw new NotFoundException("Not found customer for this id");
+        }
+        return true;
+    }
+
+    @Override
+    public List<CustomerDTO> getCustomerByName(String name) throws NotFoundException {
+        List<Customer> customersList=customerRepo.findAllByCustomerNameEquals(name);
+        if(customersList.size()!=0){
+            List<CustomerDTO> customerDTOList=modelMapper
+                    .map(customersList, new TypeToken<List<CustomerDTO>>() {
+                    }.getType());
+            return customerDTOList;
+        }
+        else{
+            throw new NotFoundException("no results found");
+        }
     }
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 @Entity
 @Table(name = "customer")
 @TypeDefs(
-        @TypeDef(name = "json",typeClass = JsonType.class)
+        @TypeDef(name = "json", typeClass = JsonType.class)
 )
 public class Customer {
 
@@ -20,23 +20,23 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int customerId;
 
-    @Column(name = "customer_name",length = 100, nullable = false)
+    @Column(name = "customer_name", length = 100, nullable = false)
     private String customerName;
 
-    @Column(name = "cutomer_address",length = 150)
+    @Column(name = "cutomer_address", length = 150)
     private String customerAddress;
 
-    @Column(name = "customer_salary",length = 10)
+    @Column(name = "customer_salary", length = 10)
     private double salary;
 
     @Type(type = "json")
-    @Column(name = "contactNumber",columnDefinition = "json")
+    @Column(name = "contactNumber", columnDefinition = "json")
     private ArrayList contactNumber;
 
-    @Column(name="nic",length = 12,unique = true)
+    @Column(name = "nic", length = 12, unique = true)
     private String nic;
 
-    @Column(name = "activeStatus",columnDefinition = "TINYINT default 1")
+    @Column(name = "activeStatus", columnDefinition = "TINYINT default 1")
     private boolean activeStatus;
 
     public Customer() {
