@@ -6,6 +6,7 @@ import com.pos.pointOfSale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.pointOfSale.entity.Customer;
 import com.pos.pointOfSale.repository.CustomerRepo;
 import com.pos.pointOfSale.service.CustomerService;
+import com.pos.pointOfSale.utils.mappers.CustomerMappers;
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -24,6 +25,9 @@ public class CustomerServiceIMPL implements CustomerService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private CustomerMappers customerMappers;
 
     @Override
     public String addCustomer(CustomerSaveRequestDTO customerSaveRequestDTO) {
@@ -69,7 +73,8 @@ public class CustomerServiceIMPL implements CustomerService {
 
         if (customer.isPresent()) {
 //            CustomerDTO customerDTO=new CustomerDTO();
-            CustomerDTO customerDTO = modelMapper.map(customer.get(), CustomerDTO.class);
+//            CustomerDTO customerDTO = modelMapper.map(customer.get(), CustomerDTO.class);
+            CustomerDTO customerDTO=customerMappers.entityToDto(customer.get());
             return customerDTO;
         } else {
             return null;
