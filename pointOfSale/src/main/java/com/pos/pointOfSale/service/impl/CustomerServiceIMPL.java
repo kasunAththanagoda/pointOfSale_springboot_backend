@@ -34,7 +34,7 @@ public class CustomerServiceIMPL implements CustomerService {
     @Override
     public String updateCustomer(CustomerUpdateRequestDTO customerUpdateRequestDTO) {
         if(customerRepo.existsById(customerUpdateRequestDTO.getCustomerId())){
-            Customer customer= customerRepo.getReferenceById(customerUpdateRequestDTO.getCustomerId());
+            Customer customer= customerRepo.getById(customerUpdateRequestDTO.getCustomerId());
 
             customer.setCustomerName(customerUpdateRequestDTO.getCustomerName());
             customer.setCustomerAddress(customerUpdateRequestDTO.getCustomerAddress());

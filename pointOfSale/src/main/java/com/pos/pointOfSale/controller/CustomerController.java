@@ -1,5 +1,6 @@
 package com.pos.pointOfSale.controller;
 
+import com.pos.pointOfSale.dto.CustomerDTO;
 import com.pos.pointOfSale.dto.request.CustomerSaveRequestDTO;
 import com.pos.pointOfSale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.pointOfSale.service.CustomerService;
@@ -25,5 +26,10 @@ public class CustomerController {
     public String updateCustomer(@RequestBody CustomerUpdateRequestDTO customerUpdateRequestDTO){
         return customerService.updateCustomer(customerUpdateRequestDTO);
     }
+
+//    @GetMapping(path = "get-all-customers")
+//    public CustomerDTO getAllCustomers(){
+//
+//    }
 
 }

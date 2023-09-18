@@ -1,13 +1,14 @@
 package com.pos.pointOfSale.dto.request;
 
-import lombok.*;
+//import lombok.*;
 
 import java.util.ArrayList;
 //@AllArgsConstructor
-////@NoArgsConstructor
-////@Getter
-////@Setter
-////@ToString
+//@NoArgsConstructor
+//////@Getter
+//////@Setter
+//////@ToString
+//@Data
 public class CustomerUpdateRequestDTO {
 
     private int customerId;
