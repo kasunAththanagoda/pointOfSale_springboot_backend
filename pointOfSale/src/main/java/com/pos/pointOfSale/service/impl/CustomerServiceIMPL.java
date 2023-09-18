@@ -6,14 +6,23 @@ import com.pos.pointOfSale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.pointOfSale.entity.Customer;
 import com.pos.pointOfSale.repository.CustomerRepo;
 import com.pos.pointOfSale.service.CustomerService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerServiceIMPL implements CustomerService {
 
     @Autowired
     private CustomerRepo customerRepo;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public String addCustomer(CustomerSaveRequestDTO customerSaveRequestDTO) {
@@ -51,5 +60,45 @@ public class CustomerServiceIMPL implements CustomerService {
             System.out.println("user id not found");
             return "user id not found";
         }
+    }
+
+    @Override
+    public CustomerDTO getCustomerById(int id) {
+        Optional<Customer> customer=customerRepo.findById(id);
+
+        if(customer.isPresent()){
+//            CustomerDTO customerDTO=new CustomerDTO();
+            CustomerDTO customerDTO=modelMapper.map(customer.get(),CustomerDTO.class);
+            return customerDTO;
+        }else {
+            return null;
+            }
+
+
+
+    }
+
+    @Override
+    public List<CustomerDTO> getAllCustomers() {
+        List<Customer> allCustomersEntity=customerRepo.findAll();
+
+        List<CustomerDTO> customerDtoList=new ArrayList<>();
+//        for(Customer c:allCustomersEntity){
+//            CustomerDTO customerDTO=new CustomerDTO(
+//              c.getCustomerId(),
+//              c.getCustomerName(),
+//              c.getCustomerAddress(),
+//              c.getSalary(),
+//              c.getContactNumber(),
+//              c.getNic(),
+//              c.isActiveStatus()
+//            );
+//            customerDtoList.add(customerDTO);
+//        }
+
+        List<CustomerDTO> customerDTOS=modelMapper
+                .map(allCustomersEntity,new TypeToken<List<CustomerDTO>>(){}.getType());
+
+        return customerDTOS;
     }
 }
