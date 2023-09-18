@@ -132,4 +132,16 @@ public class CustomerServiceIMPL implements CustomerService {
             throw new NotFoundException("no results found");
         }
     }
+
+    @Override
+    public List<CustomerDTO> getAllCustomerByActiveStatus() throws NotFoundException {
+        List<Customer> customerList=customerRepo.findAllByActiveStatusEquals(true);
+        if(customerList.size()!=0){
+            List<CustomerDTO> customerDTOList=customerMappers.entityListToDtoList(customerList);
+            return customerDTOList;
+        }
+        else{
+            throw new NotFoundException("no customers found");
+        }
+    }
 }

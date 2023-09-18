@@ -8,4 +8,6 @@ import java.util.List;
 public interface CustomerRepo extends JpaRepository<Customer,Integer> {
 
     List<Customer> findAllByCustomerNameEquals(String name);
+
+    List<Customer> findAllByActiveStatusEquals(boolean b);
 }

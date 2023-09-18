@@ -59,4 +59,10 @@ public class CustomerController {
         return customerDTOS;
     }
 
+    @GetMapping(path = {"get-by-activeStatus"})
+    public List<CustomerDTO> getCustomersByActiveStatus() throws NotFoundException {
+        List<CustomerDTO> customerDTOList=customerService.getAllCustomerByActiveStatus();
+        return customerDTOList;
+    }
+
 }
