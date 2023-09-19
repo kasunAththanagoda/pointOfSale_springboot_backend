@@ -3,6 +3,7 @@ package com.pos.pointOfSale.controller;
 import com.pos.pointOfSale.dto.CustomerDTO;
 import com.pos.pointOfSale.dto.request.CustomerSaveRequestDTO;
 import com.pos.pointOfSale.dto.request.CustomerUpdateRequestDTO;
+import com.pos.pointOfSale.dto.response.ResponseActiveCustomerOnlyNameDto;
 import com.pos.pointOfSale.service.CustomerService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,12 @@ public class CustomerController {
     public List<CustomerDTO> getCustomersByActiveStatus() throws NotFoundException {
         List<CustomerDTO> customerDTOList=customerService.getAllCustomerByActiveStatus();
         return customerDTOList;
+    }
+
+    @GetMapping(path = {"get-by-activeStatus-onlyName"})
+    public List<ResponseActiveCustomerOnlyNameDto> getCustomersByActiveStatusOnlyName() throws NotFoundException {
+        List<ResponseActiveCustomerOnlyNameDto> responseActiveCustomerOnlyNameDtos =customerService.getAllCustomerByActiveStatusOnlyName();
+        return responseActiveCustomerOnlyNameDtos;
     }
 
 }

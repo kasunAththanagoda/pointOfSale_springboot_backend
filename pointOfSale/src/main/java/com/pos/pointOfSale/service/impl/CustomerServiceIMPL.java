@@ -3,6 +3,7 @@ package com.pos.pointOfSale.service.impl;
 import com.pos.pointOfSale.dto.CustomerDTO;
 import com.pos.pointOfSale.dto.request.CustomerSaveRequestDTO;
 import com.pos.pointOfSale.dto.request.CustomerUpdateRequestDTO;
+import com.pos.pointOfSale.dto.response.ResponseActiveCustomerOnlyNameDto;
 import com.pos.pointOfSale.entity.Customer;
 import com.pos.pointOfSale.repository.CustomerRepo;
 import com.pos.pointOfSale.service.CustomerService;
@@ -144,4 +145,18 @@ public class CustomerServiceIMPL implements CustomerService {
             throw new NotFoundException("no customers found");
         }
     }
+
+    @Override
+    public List<ResponseActiveCustomerOnlyNameDto> getAllCustomerByActiveStatusOnlyName() throws NotFoundException {
+        List<Customer> customerList=customerRepo.findAllByActiveStatusEquals(true);
+        if(customerList.size()!=0){
+            List<ResponseActiveCustomerOnlyNameDto> responseActiveCustomerOnlyNameDtoList=customerMappers.entityListToDtoListOnlyName(customerList);
+            return responseActiveCustomerOnlyNameDtoList;
+        }
+        else{
+            throw new NotFoundException("no customers found");
+        }
+    }
+
+
 }
