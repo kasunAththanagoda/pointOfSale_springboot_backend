@@ -2,6 +2,7 @@ package com.pos.pointOfSale.service.impl;
 
 import com.pos.pointOfSale.dto.CustomerDTO;
 import com.pos.pointOfSale.dto.request.CustomerSaveRequestDTO;
+import com.pos.pointOfSale.dto.request.CustomerUpdateQueryRequestDto;
 import com.pos.pointOfSale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.pointOfSale.dto.response.ResponseActiveCustomerOnlyNameDto;
 import com.pos.pointOfSale.entity.Customer;
@@ -156,6 +157,18 @@ public class CustomerServiceIMPL implements CustomerService {
         else{
             throw new NotFoundException("no customers found");
         }
+    }
+
+    @Override
+    public String updateCustomerByQuery(int id, CustomerUpdateQueryRequestDto customerUpdateQueryRequestDto) {
+        if(customerRepo.existsById(id)){
+            customerRepo.updateCustomerByQuery(customerUpdateQueryRequestDto.getCustomerName(),customerUpdateQueryRequestDto.getNic(),id);
+            return "customer updated successfully with the id :"+id;
+        }
+        else{
+            return "customer update failed"+id;
+        }
+
     }
 
 

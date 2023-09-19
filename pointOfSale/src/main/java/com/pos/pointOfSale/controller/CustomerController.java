@@ -2,6 +2,7 @@ package com.pos.pointOfSale.controller;
 
 import com.pos.pointOfSale.dto.CustomerDTO;
 import com.pos.pointOfSale.dto.request.CustomerSaveRequestDTO;
+import com.pos.pointOfSale.dto.request.CustomerUpdateQueryRequestDto;
 import com.pos.pointOfSale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.pointOfSale.dto.response.ResponseActiveCustomerOnlyNameDto;
 import com.pos.pointOfSale.service.CustomerService;
@@ -31,14 +32,14 @@ public class CustomerController {
         return customerService.updateCustomer(customerUpdateRequestDTO);
     }
 
-    @GetMapping(path = {"get-by-id"}, params = {"id"})
+    @GetMapping(path = {"/get-by-id"}, params = {"id"})
     public CustomerDTO getById(@RequestParam(value = "id") int id){
         CustomerDTO customerDTO=customerService.getCustomerById(id);
 
         return customerDTO;
     }
 
-    @GetMapping(path = {"get-all-customers"})
+    @GetMapping(path = {"/get-all-customers"})
     public List<CustomerDTO> getAllCustomers(){
         List<CustomerDTO> allCustomers=customerService.getAllCustomers();
         return allCustomers;
@@ -54,22 +55,27 @@ public class CustomerController {
         }
     }
 
-    @GetMapping(path = {"get-by-name"},params = "name")
+    @GetMapping(path = {"/get-by-name"},params = "name")
     public List<CustomerDTO> getCustomerByName(@RequestParam(value = "name") String name) throws NotFoundException {
         List<CustomerDTO> customerDTOS = customerService.getCustomerByName(name);
         return customerDTOS;
     }
 
-    @GetMapping(path = {"get-by-activeStatus"})
+    @GetMapping(path = {"/et-by-activeStatus"})
     public List<CustomerDTO> getCustomersByActiveStatus() throws NotFoundException {
         List<CustomerDTO> customerDTOList=customerService.getAllCustomerByActiveStatus();
         return customerDTOList;
     }
 
-    @GetMapping(path = {"get-by-activeStatus-onlyName"})
+    @GetMapping(path = {"/get-by-activeStatus-onlyName"})
     public List<ResponseActiveCustomerOnlyNameDto> getCustomersByActiveStatusOnlyName() throws NotFoundException {
         List<ResponseActiveCustomerOnlyNameDto> responseActiveCustomerOnlyNameDtos =customerService.getAllCustomerByActiveStatusOnlyName();
         return responseActiveCustomerOnlyNameDtos;
+    }
+
+    @PutMapping(path = {"/update-by-query/{id}"})
+    public String updateCustomerByQuery(@PathVariable(value = "id")int id, @RequestBody CustomerUpdateQueryRequestDto customerUpdateQueryRequestDto){
+        return customerService.updateCustomerByQuery(id,customerUpdateQueryRequestDto);
     }
 
 }

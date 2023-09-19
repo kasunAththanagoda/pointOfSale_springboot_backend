@@ -3,6 +3,7 @@ package com.pos.pointOfSale.service;
 
 import com.pos.pointOfSale.dto.CustomerDTO;
 import com.pos.pointOfSale.dto.request.CustomerSaveRequestDTO;
+import com.pos.pointOfSale.dto.request.CustomerUpdateQueryRequestDto;
 import com.pos.pointOfSale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.pointOfSale.dto.response.ResponseActiveCustomerOnlyNameDto;
 import javassist.NotFoundException;
@@ -26,4 +27,6 @@ public interface CustomerService {
     List<CustomerDTO> getAllCustomerByActiveStatus() throws NotFoundException;
 
     List<ResponseActiveCustomerOnlyNameDto> getAllCustomerByActiveStatusOnlyName() throws NotFoundException;
+
+    String updateCustomerByQuery(int id, CustomerUpdateQueryRequestDto customerUpdateQueryRequestDto);
 }
