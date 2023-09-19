@@ -4,6 +4,7 @@ import com.pos.pointOfSale.dto.CustomerDTO;
 import com.pos.pointOfSale.dto.request.CustomerSaveRequestDTO;
 import com.pos.pointOfSale.dto.request.CustomerUpdateQueryRequestDto;
 import com.pos.pointOfSale.dto.request.CustomerUpdateRequestDTO;
+import com.pos.pointOfSale.dto.response.EndpointTwoResponseDto;
 import com.pos.pointOfSale.dto.response.ResponseActiveCustomerOnlyNameDto;
 import com.pos.pointOfSale.service.CustomerService;
 import javassist.NotFoundException;
@@ -76,6 +77,16 @@ public class CustomerController {
     @PutMapping(path = {"/update-by-query/{id}"})
     public String updateCustomerByQuery(@PathVariable(value = "id")int id, @RequestBody CustomerUpdateQueryRequestDto customerUpdateQueryRequestDto){
         return customerService.updateCustomerByQuery(id,customerUpdateQueryRequestDto);
+    }
+
+    @GetMapping(path = {"/endpoint2/{id}"})
+    public EndpointTwoResponseDto endpointTwo(@PathVariable(value = "id")int id){
+        return customerService.endpointTwo(id);
+    }
+
+    @GetMapping(path={"/get-by-nic"},params = {"nic"})
+    public CustomerDTO getCustomerByNic(@RequestParam(value = "nic")String nic) {
+        return customerService.getCustomerByNic(nic);
     }
 
 }

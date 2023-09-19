@@ -5,6 +5,7 @@ import com.pos.pointOfSale.dto.CustomerDTO;
 import com.pos.pointOfSale.dto.request.CustomerSaveRequestDTO;
 import com.pos.pointOfSale.dto.request.CustomerUpdateQueryRequestDto;
 import com.pos.pointOfSale.dto.request.CustomerUpdateRequestDTO;
+import com.pos.pointOfSale.dto.response.EndpointTwoResponseDto;
 import com.pos.pointOfSale.dto.response.ResponseActiveCustomerOnlyNameDto;
 import javassist.NotFoundException;
 
@@ -29,4 +30,8 @@ public interface CustomerService {
     List<ResponseActiveCustomerOnlyNameDto> getAllCustomerByActiveStatusOnlyName() throws NotFoundException;
 
     String updateCustomerByQuery(int id, CustomerUpdateQueryRequestDto customerUpdateQueryRequestDto);
+
+    EndpointTwoResponseDto endpointTwo(int id);
+
+    CustomerDTO getCustomerByNic(String nic);
 }

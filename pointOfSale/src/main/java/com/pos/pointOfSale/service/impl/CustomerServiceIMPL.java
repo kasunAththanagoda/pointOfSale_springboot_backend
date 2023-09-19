@@ -4,8 +4,10 @@ import com.pos.pointOfSale.dto.CustomerDTO;
 import com.pos.pointOfSale.dto.request.CustomerSaveRequestDTO;
 import com.pos.pointOfSale.dto.request.CustomerUpdateQueryRequestDto;
 import com.pos.pointOfSale.dto.request.CustomerUpdateRequestDTO;
+import com.pos.pointOfSale.dto.response.EndpointTwoResponseDto;
 import com.pos.pointOfSale.dto.response.ResponseActiveCustomerOnlyNameDto;
 import com.pos.pointOfSale.entity.Customer;
+import com.pos.pointOfSale.exception.EntryDuplicateException;
 import com.pos.pointOfSale.repository.CustomerRepo;
 import com.pos.pointOfSale.service.CustomerService;
 import com.pos.pointOfSale.utils.mappers.CustomerMappers;
@@ -64,8 +66,9 @@ public class CustomerServiceIMPL implements CustomerService {
             return "user updated";
 
         } else {
-            System.out.println("user id not found");
-            return "user id not found";
+//            System.out.println("user id not found");
+//            return "user id not found";
+            throw new EntryDuplicateException("not found in DB");
         }
     }
 
@@ -169,6 +172,26 @@ public class CustomerServiceIMPL implements CustomerService {
             return "customer update failed"+id;
         }
 
+    }
+//homework
+    @Override
+    public EndpointTwoResponseDto endpointTwo(int id) {
+        if(customerRepo.existsById(id)){
+
+        }else{}
+        return null;
+    }
+
+    @Override
+    public CustomerDTO getCustomerByNic(String nic)  {
+        Optional<Customer> customerOptional=customerRepo.findByNicEquals(nic);
+        if(customerOptional.isPresent()){
+            CustomerDTO customerDTO=customerMappers.entityToDto(customerOptional.get());
+            return customerDTO;
+        }
+        else {
+            throw new com.pos.pointOfSale.exception.NotFoundException("Not Found");
+        }
     }
 
 
