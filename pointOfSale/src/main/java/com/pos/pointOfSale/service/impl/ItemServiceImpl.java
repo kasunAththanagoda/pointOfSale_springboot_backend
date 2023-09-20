@@ -33,4 +33,11 @@ public class ItemServiceImpl implements ItemService {
         List<ItemDto> itemDtoList=itemMapper.entityListToDtoList(all);
         return itemDtoList;
     }
+
+    @Override
+    public List<ItemDto> getAllFilterByState(boolean status) {
+        List<Item> itemList =itemRepo.findByActiveStateEquals(status);
+        List<ItemDto> itemDtoList=itemMapper.entityListToDtoList(itemList);
+        return itemDtoList;
+    }
 }

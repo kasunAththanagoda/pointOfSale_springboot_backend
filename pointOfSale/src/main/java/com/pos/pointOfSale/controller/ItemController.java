@@ -35,7 +35,24 @@ public class ItemController {
         List<ItemDto> itemDtoList =itemService.getAllItems();
         return new ResponseEntity<StandardResponse>(
                 new StandardResponse(200,"success",itemDtoList),
-                HttpStatus.CREATED
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping(path = "get-all-items-filter0by-state",params = "state")
+    public ResponseEntity<StandardResponse> getAllItemsFilterByState(@RequestParam(value = "state")String state){
+        List<ItemDto> itemDtoList;
+        if(state.equalsIgnoreCase("active") || state.equalsIgnoreCase("inactive")){
+            boolean status=state.equalsIgnoreCase("active")? true : false;
+            itemDtoList =itemService.getAllFilterByState(status);
+
+        }
+        else{
+            itemDtoList =itemService.getAllItems();
+        }
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,"success",itemDtoList),
+                HttpStatus.OK
         );
     }
 
