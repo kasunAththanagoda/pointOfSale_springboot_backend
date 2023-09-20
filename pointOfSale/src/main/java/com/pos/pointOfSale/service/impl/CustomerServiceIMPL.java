@@ -84,8 +84,6 @@ public class CustomerServiceIMPL implements CustomerService {
         } else {
             return null;
         }
-
-
     }
 
     @Override
@@ -193,6 +191,18 @@ public class CustomerServiceIMPL implements CustomerService {
             throw new com.pos.pointOfSale.exception.NotFoundException("Not Found");
         }
     }
+
+//    @Override
+//    public CustomerDTO getByIdFilterByState(int id, String state) {
+//        if(customerRepo.existsById(id)){
+//           Optional<Customer> customerOptional=customerRepo.findById(id);
+//
+//        }
+//        else{
+//            throw new com.pos.pointOfSale.exception.NotFoundException("not found");
+//        }
+//        return null;
+//    }
 
 
 }

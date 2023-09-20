@@ -89,4 +89,9 @@ public class CustomerController {
         return customerService.getCustomerByNic(nic);
     }
 
+//    @GetMapping(path = {"/get-by-id-filter-by-state"})
+//    public CustomerDTO getByIdFilterByState(@RequestParam(value = "id")int id,@RequestParam(value = "state") String state){
+//        return customerService.getByIdFilterByState(id,state);
+//    }
+
 }

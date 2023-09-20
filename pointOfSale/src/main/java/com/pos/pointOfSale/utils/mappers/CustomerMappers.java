@@ -12,6 +12,4 @@ public interface CustomerMappers {
     CustomerDTO entityToDto(Customer customer);
     List<CustomerDTO> entityListToDtoList(List<Customer> customerList);
     List<ResponseActiveCustomerOnlyNameDto> entityListToDtoListOnlyName(List<Customer> customerList);
-
-
 }

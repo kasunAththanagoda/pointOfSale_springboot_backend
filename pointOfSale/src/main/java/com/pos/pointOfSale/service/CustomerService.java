@@ -34,4 +34,6 @@ public interface CustomerService {
     EndpointTwoResponseDto endpointTwo(int id);
 
     CustomerDTO getCustomerByNic(String nic);
+
+//    CustomerDTO getByIdFilterByState(int id, String state);
 }
