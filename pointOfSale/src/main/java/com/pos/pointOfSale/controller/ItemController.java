@@ -1,5 +1,6 @@
 package com.pos.pointOfSale.controller;
 
+import com.pos.pointOfSale.dto.ItemDto;
 import com.pos.pointOfSale.dto.request.ItemSaveRequestDto;
 import com.pos.pointOfSale.service.ItemService;
 import com.pos.pointOfSale.utils.StandardResponse;
@@ -8,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @CrossOrigin
@@ -23,6 +26,15 @@ public class ItemController {
         String id=itemService.addItem(itemSaveRequestDto);
         return new ResponseEntity<StandardResponse>(
                 new StandardResponse(201,id+" item saved successfully",id),
+                HttpStatus.CREATED
+        );
+    }
+
+    @GetMapping(path = "get-all-items")
+    public ResponseEntity<StandardResponse> getAllItems(){
+        List<ItemDto> itemDtoList =itemService.getAllItems();
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,"success",itemDtoList),
                 HttpStatus.CREATED
         );
     }
