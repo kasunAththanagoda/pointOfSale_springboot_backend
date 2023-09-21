@@ -2,6 +2,7 @@ package com.pos.pointOfSale.repository;
 
 import com.pos.pointOfSale.entity.Item;
 import com.pos.pointOfSale.entity.enums.MeasuringUnits;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,6 +24,8 @@ public interface ItemRepo extends JpaRepository<Item,Integer> {
     void updateItemByQuery(String itemName, String measuringUnit, double balanceQty, double supplierPrice, double sellingPrice, int id);
 
     int countAllByActiveStateEquals(boolean status);
+
+
 
     //void updateItemByQuerys(String itemName, String measuringUnit, double balanceQty, double supplierPrice, double sellingPrice, int id);
 }
