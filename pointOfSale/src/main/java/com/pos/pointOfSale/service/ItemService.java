@@ -19,4 +19,6 @@ public interface ItemService {
     String updateItemByQuery(int id, ItemUpdateRequestDto itemUpdateRequestDto);
 
     ItemDto searchItemById(int id);
+
+    int countByState(String state);
 }

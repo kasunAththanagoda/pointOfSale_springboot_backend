@@ -84,5 +84,14 @@ public class ItemController {
         );
     }
 
+    @GetMapping(path = "count-items-by-state",params = "state")
+    public ResponseEntity<StandardResponse> countByState(@RequestParam(value = "state") String state){
+        int count=itemService.countByState(state);
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,"success",count),
+                HttpStatus.OK
+        );
+    }
+
 
 }

@@ -81,4 +81,13 @@ public class ItemServiceImpl implements ItemService {
 
     }
 
+    @Override
+    public int countByState(String state) {
+        boolean status=state.equalsIgnoreCase("active")? true : false;
+
+            int count=itemRepo.countAllByActiveStateEquals(status);
+
+        return count;
+    }
+
 }
