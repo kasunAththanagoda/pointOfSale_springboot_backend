@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -64,6 +65,20 @@ public class ItemServiceImpl implements ItemService {
         }else{
             throw new NotFoundException("id not found");
         }
+    }
+
+    @Override
+    public ItemDto searchItemById(int id) {
+        Optional<Item> byId = itemRepo.findById(id);
+        if(byId.isPresent()){
+            ItemDto itemDto=itemMapper.entityToDto(byId.get());
+            return itemDto;
+        }else{
+            throw new NotFoundException("id not found");
+        }
+
+
+
     }
 
 }

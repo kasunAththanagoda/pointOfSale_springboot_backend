@@ -17,4 +17,6 @@ public interface ItemMapper {
 
 
     Item updateRequestDtoToItemEntity(ItemUpdateRequestDto itemUpdateRequestDto);
+
+    ItemDto entityToDto(Item item);
 }

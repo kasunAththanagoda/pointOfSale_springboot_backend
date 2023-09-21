@@ -75,4 +75,14 @@ public class ItemController {
         );
     }
 
+    @GetMapping(path = "/search-item-by-id/{id}")
+    public ResponseEntity<StandardResponse> searchItemById(@PathVariable(value = "id")int id){
+        ItemDto itemDto=itemService.searchItemById(id);
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,"data",itemDto),
+                HttpStatus.OK
+        );
+    }
+
+
 }

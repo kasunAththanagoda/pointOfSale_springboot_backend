@@ -17,4 +17,6 @@ public interface ItemService {
     int deleteItem(int id);
 
     String updateItemByQuery(int id, ItemUpdateRequestDto itemUpdateRequestDto);
+
+    ItemDto searchItemById(int id);
 }
