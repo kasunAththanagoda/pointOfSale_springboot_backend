@@ -2,6 +2,7 @@ package com.pos.pointOfSale.utils.mappers;
 
 import com.pos.pointOfSale.dto.ItemDto;
 import com.pos.pointOfSale.dto.request.ItemSaveRequestDto;
+import com.pos.pointOfSale.dto.request.ItemUpdateRequestDto;
 import com.pos.pointOfSale.entity.Item;
 import org.mapstruct.Mapper;
 
@@ -15,4 +16,5 @@ public interface ItemMapper {
     List<ItemDto> entityListToDtoList(List<Item> itemList);
 
 
+    Item updateRequestDtoToItemEntity(ItemUpdateRequestDto itemUpdateRequestDto);
 }

@@ -2,6 +2,7 @@ package com.pos.pointOfSale.controller;
 
 import com.pos.pointOfSale.dto.ItemDto;
 import com.pos.pointOfSale.dto.request.ItemSaveRequestDto;
+import com.pos.pointOfSale.dto.request.ItemUpdateRequestDto;
 import com.pos.pointOfSale.service.ItemService;
 import com.pos.pointOfSale.utils.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class ItemController {
         );
     }
 
-    @GetMapping(path = "get-all-items-filter0by-state",params = "state")
+    @GetMapping(path = "get-all-items-filter-by-state",params = "state")
     public ResponseEntity<StandardResponse> getAllItemsFilterByState(@RequestParam(value = "state")String state){
         List<ItemDto> itemDtoList;
         if(state.equalsIgnoreCase("active") || state.equalsIgnoreCase("inactive")){
@@ -52,6 +53,24 @@ public class ItemController {
         }
         return new ResponseEntity<StandardResponse>(
                 new StandardResponse(200,"success",itemDtoList),
+                HttpStatus.OK
+        );
+    }
+
+    @DeleteMapping(path = {"/delete-item/{id}"})
+    public ResponseEntity<StandardResponse> deleteItem(@PathVariable(value = "id")int id){
+        int deletedId=itemService.deleteItem(id);
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,"item deleted",deletedId),
+                HttpStatus.OK
+        );
+    }
+
+    @PutMapping(path = {"/update-item-by-query/{id}"})
+    public ResponseEntity<StandardResponse> updateItemByQuery(@RequestBody ItemUpdateRequestDto itemUpdateRequestDto,@PathVariable(value = "id")int id){
+        String updated=itemService.updateItemByQuery(id,itemUpdateRequestDto);
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,"successflly updated",updated),
                 HttpStatus.OK
         );
     }

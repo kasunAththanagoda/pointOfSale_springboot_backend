@@ -2,7 +2,10 @@ package com.pos.pointOfSale.service.impl;
 
 import com.pos.pointOfSale.dto.ItemDto;
 import com.pos.pointOfSale.dto.request.ItemSaveRequestDto;
+import com.pos.pointOfSale.dto.request.ItemUpdateRequestDto;
 import com.pos.pointOfSale.entity.Item;
+import com.pos.pointOfSale.entity.enums.MeasuringUnits;
+import com.pos.pointOfSale.exception.NotFoundException;
 import com.pos.pointOfSale.repository.ItemRepo;
 import com.pos.pointOfSale.service.ItemService;
 import com.pos.pointOfSale.utils.mappers.ItemMapper;
@@ -40,4 +43,27 @@ public class ItemServiceImpl implements ItemService {
         List<ItemDto> itemDtoList=itemMapper.entityListToDtoList(itemList);
         return itemDtoList;
     }
+
+    @Override
+    public int deleteItem(int id) {
+        if(itemRepo.existsById(id)){
+            itemRepo.deleteById(id);
+            return id;
+        }else{
+            throw new NotFoundException("id not found");
+        }
+    }
+
+    @Override
+    public String updateItemByQuery(int id, ItemUpdateRequestDto itemUpdateRequestDto) {
+        if(itemRepo.existsById(id)){
+//            Item item=itemMapper.updateRequestDtoToItemEntity(itemUpdateRequestDto);
+//            item.setItemId(id);
+             itemRepo.updateItemByQuery(itemUpdateRequestDto.getItemName(),itemUpdateRequestDto.getMeasuringUnit(),itemUpdateRequestDto.getBalanceQty(),itemUpdateRequestDto.getSupplierPrice(),itemUpdateRequestDto.getSellingPrice(),id);
+            return "item updated";
+        }else{
+            throw new NotFoundException("id not found");
+        }
+    }
+
 }
