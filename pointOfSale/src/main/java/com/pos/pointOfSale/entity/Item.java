@@ -6,6 +6,7 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "item")
@@ -13,6 +14,10 @@ import javax.persistence.*;
         @TypeDef(name = "json",typeClass = JsonType.class)
 })
 public class Item {
+
+    @OneToMany(mappedBy="items")
+    private Set<OrderDetails> orderDetails;
+
 
     @Id
     @Column(name = "item_id",length = 45)
@@ -38,10 +43,25 @@ public class Item {
     @Column(name = "activeState",columnDefinition = "TINYINT default 1")
     private boolean activeState;
 
+    public Item() {
+    }
+
+    public Item(Set<OrderDetails> orderDetails, int itemId, String itemName, MeasuringUnits measuringUnit, double balanceQty, double supplierPrice, double sellingPrice, boolean activeState) {
+        this.orderDetails = orderDetails;
+        this.itemId = itemId;
+        this.itemName = itemName;
+        this.measuringUnit = measuringUnit;
+        this.balanceQty = balanceQty;
+        this.supplierPrice = supplierPrice;
+        this.sellingPrice = sellingPrice;
+        this.activeState = activeState;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
-                "itemId=" + itemId +
+                "orderDetails=" + orderDetails +
+                ", itemId=" + itemId +
                 ", itemName='" + itemName + '\'' +
                 ", measuringUnit=" + measuringUnit +
                 ", balanceQty=" + balanceQty +
@@ -49,6 +69,14 @@ public class Item {
                 ", sellingPrice=" + sellingPrice +
                 ", activeState=" + activeState +
                 '}';
+    }
+
+    public Set<OrderDetails> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(Set<OrderDetails> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 
     public int getItemId() {
@@ -105,18 +133,5 @@ public class Item {
 
     public void setActiveState(boolean activeState) {
         this.activeState = activeState;
-    }
-
-    public Item(int itemId, String itemName, MeasuringUnits measuringUnit, double balanceQty, double supplierPrice, double sellingPrice, boolean activeState) {
-        this.itemId = itemId;
-        this.itemName = itemName;
-        this.measuringUnit = measuringUnit;
-        this.balanceQty = balanceQty;
-        this.supplierPrice = supplierPrice;
-        this.sellingPrice = sellingPrice;
-        this.activeState = activeState;
-    }
-
-    public Item() {
     }
 }

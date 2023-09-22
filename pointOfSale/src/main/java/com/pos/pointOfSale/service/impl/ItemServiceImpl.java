@@ -86,8 +86,8 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public int countByState(String state) {
         boolean status = state.equalsIgnoreCase("active") ? true : false;
-        int count = itemRepo.countAllByActiveStateEquals(status);
-        return count;
+        long count = itemRepo.countAllByActiveStateEquals(status);
+        return (int) count;
     }
 
     @Override
@@ -98,5 +98,16 @@ public class ItemServiceImpl implements ItemService {
                 itemRepo.count()
         );
     }
+
+    @Override
+    public PaginatedResponseItemDto getAllItemsPaginatedFilterByActiveStatus(int page, int size, boolean activeStatus) {
+        Page<Item> items=itemRepo.findAllByActiveStateEquals(activeStatus,PageRequest.of(page, size));
+        PaginatedResponseItemDto paginatedResponseItemDto=new PaginatedResponseItemDto(
+                itemMapper.pageToList(items),
+                itemRepo.countAllByActiveStateEquals(activeStatus)
+        );
+        return paginatedResponseItemDto;
+    }
+
 
 }

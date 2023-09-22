@@ -85,7 +85,7 @@ public class ItemController {
         );
     }
 
-    @GetMapping(path = "count-items-by-state-byme", params = "state")
+    @GetMapping(path = "/count-items-by-state-byme", params = "state")
     public ResponseEntity<StandardResponse> countByState(@RequestParam(value = "state") String state) {
         int count = itemService.countByState(state);
         return new ResponseEntity<StandardResponse>(
@@ -95,18 +95,33 @@ public class ItemController {
     }
 
     @GetMapping(
-            path = "get-all-items-paginated",
-            params = {"page","size"}
+            path = "/get-all-items-paginated",
+            params = {"page", "size"}
     )
     public ResponseEntity<StandardResponse> getAllItemsPaginated(
-            @RequestParam(value = "page")int page,
-            @RequestParam(value = "size")@Size(max = 50) int size){
-        PaginatedResponseItemDto paginatedResponseItemDto=itemService.getAllItemsPaginated(page,size);
+            @RequestParam(value = "page") int page,
+            @RequestParam(value = "size") @Size(max = 50) int size) {
+        PaginatedResponseItemDto paginatedResponseItemDto = itemService.getAllItemsPaginated(page, size);
         return new ResponseEntity<StandardResponse>(
-                new StandardResponse(200,"success",paginatedResponseItemDto),
+                new StandardResponse(200, "success", paginatedResponseItemDto),
                 HttpStatus.OK
         );
     }
 
+    @GetMapping(
+            path = "/get-all-items-paginated-filteredByState",
+            params = {"page", "size","activeStatus"}
+    )
+    public ResponseEntity<StandardResponse> getAllItemsPaginatedFilteredByStatus(
+            @RequestParam(value = "page") int page,
+            @RequestParam(value = "size") int size,
+            @RequestParam(value = "activeStatus") boolean activeStatus
+    ) {
+        PaginatedResponseItemDto paginatedResponseItemDto=itemService.getAllItemsPaginatedFilterByActiveStatus(page,size,activeStatus);
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200, "success",paginatedResponseItemDto ),
+                HttpStatus.OK
+        );
+    }
 
 }

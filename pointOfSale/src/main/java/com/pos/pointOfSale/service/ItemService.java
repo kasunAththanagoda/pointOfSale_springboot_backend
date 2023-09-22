@@ -24,4 +24,6 @@ public interface ItemService {
     int countByState(String state);
 
     PaginatedResponseItemDto getAllItemsPaginated(int page, int size);
+
+    PaginatedResponseItemDto getAllItemsPaginatedFilterByActiveStatus(int page, int size, boolean activeStatus);
 }

@@ -7,6 +7,7 @@ import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -14,6 +15,9 @@ import java.util.ArrayList;
         @TypeDef(name = "json", typeClass = JsonType.class)
 )
 public class Customer {
+
+    @OneToMany(mappedBy="customer")
+    private Set<Order> orders;
 
     @Id
     @Column(name = "customer_id", length = 45)
@@ -42,23 +46,26 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(int customerId, String customerName, String customerAddress, double salary, ArrayList contactNumber, String nic, boolean activeStatus) {
-        this.customerId = customerId;
-        this.customerName = customerName;
-        this.customerAddress = customerAddress;
-        this.salary = salary;
-        this.contactNumber = contactNumber;
-        this.nic = nic;
-        this.activeStatus = activeStatus;
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "orders=" + orders +
+                ", customerId=" + customerId +
+                ", customerName='" + customerName + '\'' +
+                ", customerAddress='" + customerAddress + '\'' +
+                ", salary=" + salary +
+                ", contactNumber=" + contactNumber +
+                ", nic='" + nic + '\'' +
+                ", activeStatus=" + activeStatus +
+                '}';
     }
 
-    public Customer(String customerName, String customerAddress, double salary, ArrayList contactNumber, String nic, boolean activeStatus) {
-        this.customerName = customerName;
-        this.customerAddress = customerAddress;
-        this.salary = salary;
-        this.contactNumber = contactNumber;
-        this.nic = nic;
-        this.activeStatus = activeStatus;
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
     public int getCustomerId() {
@@ -117,16 +124,22 @@ public class Customer {
         this.activeStatus = activeStatus;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "customerId=" + customerId +
-                ", customerName='" + customerName + '\'' +
-                ", customerAddress='" + customerAddress + '\'' +
-                ", salary=" + salary +
-                ", contactNumber=" + contactNumber +
-                ", nic='" + nic + '\'' +
-                ", activeStatus=" + activeStatus +
-                '}';
+    public Customer(Set<Order> orders, int customerId, String customerName, String customerAddress, double salary, ArrayList contactNumber, String nic, boolean activeStatus) {
+        this.orders = orders;
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.customerAddress = customerAddress;
+        this.salary = salary;
+        this.contactNumber = contactNumber;
+        this.nic = nic;
+        this.activeStatus = activeStatus;
+    }
+    public Customer( String customerName, String customerAddress, double salary, ArrayList contactNumber, String nic, boolean activeStatus) {
+        this.customerName = customerName;
+        this.customerAddress = customerAddress;
+        this.salary = salary;
+        this.contactNumber = contactNumber;
+        this.nic = nic;
+        this.activeStatus = activeStatus;
     }
 }
