@@ -127,4 +127,28 @@ public class OrderServiceImpl implements OrderService {
 
         return paginatedResponseOrderDetailsDto;
     }
+
+    @Override
+    public PaginatedResponseOrderDetailsDto getAllOrdersFilteredWithoutState(int page, int size) {
+        List<OrderDetailInterface> orderDetailInterface=orderRepo.getAllWithhoutState(PageRequest.of(page,size));
+        List<ResponseOrderDetailsDto> responseOrderDetailsDtoList=new ArrayList<>();
+
+        for(OrderDetailInterface o : orderDetailInterface){
+
+            ResponseOrderDetailsDto responseOrderDetailsDto= new ResponseOrderDetailsDto(
+                    o.getCustomerName(),
+                    o.getCustomerAddress(),
+                    o.getContactNumber(),
+                    o.getDate(),
+                    o.getTotal()
+            );
+            responseOrderDetailsDtoList.add(responseOrderDetailsDto);
+        }
+        PaginatedResponseOrderDetailsDto paginatedResponseOrderDetailsDto=new PaginatedResponseOrderDetailsDto(
+                responseOrderDetailsDtoList,
+                orderRepo.countOrderDetailsWithoutState()
+        );
+
+        return paginatedResponseOrderDetailsDto;
+    }
 }

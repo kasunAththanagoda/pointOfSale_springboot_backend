@@ -42,6 +42,9 @@ public class OrderController {
             boolean state=stateType.equalsIgnoreCase("active")? true: false;
             paginatedResponseOrderDetailsDto=orderService.getAllOrdersFiltred(state,page,size);
         }
+        else{
+            paginatedResponseOrderDetailsDto=orderService.getAllOrdersFilteredWithoutState(page,size);
+        }
 
         return new ResponseEntity<StandardResponse>(
                 new StandardResponse(200,"success",paginatedResponseOrderDetailsDto),

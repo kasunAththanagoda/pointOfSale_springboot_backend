@@ -7,4 +7,6 @@ public interface OrderService {
     String addOrder(RequestOrderSaveDto requestOrderSaveDto);
 
     PaginatedResponseOrderDetailsDto getAllOrdersFiltred(boolean state, int page, int size);
+
+    PaginatedResponseOrderDetailsDto getAllOrdersFilteredWithoutState(int page, int size);
 }
