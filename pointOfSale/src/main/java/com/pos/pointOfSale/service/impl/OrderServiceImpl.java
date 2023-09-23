@@ -1,7 +1,10 @@
 package com.pos.pointOfSale.service.impl;
 
 import com.pos.pointOfSale.dto.CustomerDTO;
+import com.pos.pointOfSale.dto.QueryInterfaces.OrderDetailInterface;
+import com.pos.pointOfSale.dto.paginated.PaginatedResponseOrderDetailsDto;
 import com.pos.pointOfSale.dto.request.RequestOrderSaveDto;
+import com.pos.pointOfSale.dto.response.ResponseOrderDetailsDto;
 import com.pos.pointOfSale.entity.Customer;
 import com.pos.pointOfSale.entity.Order;
 import com.pos.pointOfSale.entity.OrderDetails;
@@ -13,10 +16,12 @@ import com.pos.pointOfSale.service.OrderService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -80,5 +85,46 @@ public class OrderServiceImpl implements OrderService {
         }
         return null;
 
+    }
+
+
+    @Override
+    public PaginatedResponseOrderDetailsDto getAllOrdersFiltred(boolean state, int page, int size) {
+        // api wna wlwta orderrepo eka hrhaa query ek run krwl ekn ena data ekko void nttn entity ekt da gnnwa.but me wlwe join query ekk nsa
+        //table dkka data enwa.ae tka alla gnna interface ekk hda gnna wnwa //ae interface eket danne type methods wdhta
+
+        List<OrderDetailInterface> orderDetailInterfaces=orderRepo.getAllOrderDetails(state, PageRequest.of(page,size));
+
+        //api elyt dnna one dto type ekn.ae nsa mka dto wlt convert kra gnna one
+
+        //apita ona typekn list ekk hdagtta
+        List<ResponseOrderDetailsDto> responseOrderDetailsDtoList=new ArrayList<>();
+        //foreach ekkin ekin ekta danna ynne.ona nan map krnnath plwn
+        for(OrderDetailInterface i : orderDetailInterfaces){
+            ResponseOrderDetailsDto responseOrderDetailsDto= new ResponseOrderDetailsDto(
+                    i.getCustomerName(),
+                    i.getCustomerAddress(),
+                    i.getContactNumber(),
+                    i.getDate(),
+                    i.getTotal()
+            );
+
+//            String customerName, String customerAddress, ArrayList contactNumber, Date date, double total
+        responseOrderDetailsDtoList.add(responseOrderDetailsDto);
+        }
+
+        //ilta api elyt dnna one paginate krla nsa api ae object ekt da gnna one
+        PaginatedResponseOrderDetailsDto paginatedResponseOrderDetailsDto=new PaginatedResponseOrderDetailsDto(
+                responseOrderDetailsDtoList,
+                orderRepo.countOrderDetails(state)
+        );
+
+//        if(orderDetailInterfaces.size()>0){System.out.println(orderDetailInterfaces.get(0).getCustomerName());}
+//        else{
+//            System.out.println("empty");
+//        }
+
+
+        return paginatedResponseOrderDetailsDto;
     }
 }
