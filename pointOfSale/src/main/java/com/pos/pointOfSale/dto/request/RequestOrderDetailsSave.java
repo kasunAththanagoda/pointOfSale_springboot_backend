@@ -1,9 +1,5 @@
 package com.pos.pointOfSale.dto.request;
 
-import com.pos.pointOfSale.entity.Item;
-import com.pos.pointOfSale.entity.Order;
-
-import javax.persistence.*;
 
 public class RequestOrderDetailsSave {
 
@@ -17,8 +13,7 @@ public class RequestOrderDetailsSave {
 
 
     private int items;
-    private int orders;
-    private int orderDetailsId;
+//    private int orders;
     private String itemName;
     private double qty;
     private double amount;
@@ -27,8 +22,6 @@ public class RequestOrderDetailsSave {
     public String toString() {
         return "RequestOrderDetailsSave{" +
                 "items=" + items +
-                ", orders=" + orders +
-                ", orderDetailsId=" + orderDetailsId +
                 ", itemName='" + itemName + '\'' +
                 ", qty=" + qty +
                 ", amount=" + amount +
@@ -41,22 +34,6 @@ public class RequestOrderDetailsSave {
 
     public void setItems(int items) {
         this.items = items;
-    }
-
-    public int getOrders() {
-        return orders;
-    }
-
-    public void setOrders(int orders) {
-        this.orders = orders;
-    }
-
-    public int getOrderDetailsId() {
-        return orderDetailsId;
-    }
-
-    public void setOrderDetailsId(int orderDetailsId) {
-        this.orderDetailsId = orderDetailsId;
     }
 
     public String getItemName() {
@@ -83,10 +60,8 @@ public class RequestOrderDetailsSave {
         this.amount = amount;
     }
 
-    public RequestOrderDetailsSave(int items, int orders, int orderDetailsId, String itemName, double qty, double amount) {
+    public RequestOrderDetailsSave(int items, String itemName, double qty, double amount) {
         this.items = items;
-        this.orders = orders;
-        this.orderDetailsId = orderDetailsId;
         this.itemName = itemName;
         this.qty = qty;
         this.amount = amount;

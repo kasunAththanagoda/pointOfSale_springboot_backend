@@ -75,6 +75,8 @@ public class CustomerServiceIMPL implements CustomerService {
     @Override
     public CustomerDTO getCustomerById(int id) {
         Optional<Customer> customer = customerRepo.findById(id);
+       // Customer customer1 = customerRepo.getById(id);
+        //System.out.println("cudtomer data : "+customer1);
 
         if (customer.isPresent()) {
 //            CustomerDTO customerDTO=new CustomerDTO();

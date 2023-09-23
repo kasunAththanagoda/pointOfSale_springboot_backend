@@ -94,4 +94,10 @@ public class Order {
         this.date = date;
         this.total = total;
     }
+
+    public Order(Customer customer, Date date, double total) {
+        this.customer = customer;
+        this.date = date;
+        this.total = total;
+    }
 }

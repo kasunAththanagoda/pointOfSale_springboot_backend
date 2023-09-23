@@ -4,7 +4,6 @@ package com.pos.pointOfSale.dto.request;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 public class RequestOrderSaveDto {
 
