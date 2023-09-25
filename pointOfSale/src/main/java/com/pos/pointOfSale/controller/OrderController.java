@@ -45,7 +45,6 @@ public class OrderController {
         else{
             paginatedResponseOrderDetailsDto=orderService.getAllOrdersFilteredWithoutState(page,size);
         }
-
         return new ResponseEntity<StandardResponse>(
                 new StandardResponse(200,"success",paginatedResponseOrderDetailsDto),
                 HttpStatus.OK
